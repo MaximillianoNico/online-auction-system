@@ -1,0 +1,26 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "rootDir": ".",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "es2015",
+    "module": "esnext",
+    "lib": ["es2017", "dom"],
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@online-auction-system/api-bootstrap": [
+        "libs/api-bootstrap/src/index.ts"
+      ],
+      "@online-auction-system/auth-utils": ["libs/auth-utils/src/index.ts"],
+      "@online-auction-system/products": ["libs/products/src/index.ts"]
+    }
+  },
+  "exclude": ["node_modules", "tmp"]
+}
