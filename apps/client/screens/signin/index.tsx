@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { ErrorAlert, SuccessAlert } from '../register/styled';
 import { useSignIn } from './actions';
 import {
   Wrapper,
@@ -11,11 +12,22 @@ import {
 } from './styled'
 
 const Component = () => {
-  const { onChange, onSubmit, values, types } = useSignIn()
+  const {
+    onChange,
+    onSubmit,
+    values,
+    types,
+    errors,
+    isSuccess,
+    isLoading
+  } = useSignIn();
+
   return (
     <Wrapper>
       <div>
         <Title>Login</Title>
+        {!!errors && <ErrorAlert>{errors}</ErrorAlert>}
+        {isSuccess && <SuccessAlert>Success</SuccessAlert>}
         <InputGroup>
           <InputLabel>Email</InputLabel>
           <Input
@@ -37,7 +49,7 @@ const Component = () => {
         </InputGroup>
 
         <Center>
-          <Button onClick={onSubmit}>Login</Button>
+          <Button disabled={isLoading} onClick={onSubmit}>Login</Button>
         </Center>
 
         <Center>
