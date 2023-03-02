@@ -13,7 +13,7 @@ export const Heading = styled.h4`
 interface ITab {
   isActive?: boolean;
   name: string;
-  onClick?: (name: string) => void
+  onClick?: (name: string) => void;
 }
 
 const Component = ({ isActive, name = "", onClick }: ITab) => {
