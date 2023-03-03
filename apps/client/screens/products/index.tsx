@@ -1,3 +1,4 @@
+import moment from 'moment'
 import Tabs from '../../components/atoms/Tabs'
 import Tab from '../../components/atoms/Tab'
 import {
@@ -10,7 +11,9 @@ import {
 import useProducts from './actions'
 
 const Component = () => {
-  const { activeTab, onChangeTab, TABS } = useProducts();
+  const { activeTab, onChangeTab, TABS, data } = useProducts();
+
+  console.log('data: ', data);
 
   return (
     <Wrapper>
@@ -26,39 +29,40 @@ const Component = () => {
           isActive={activeTab === TABS.COMPLETED}
         />
       </Tabs>
-      <div>
+      <div style={{ marginTop: 20 }}>
         <Table>
-          <TableRow>
-            <th>Name</th>
-            <th>Current Price</th>
-            <th>Duration</th>
-            <th>Bid</th>
-          </TableRow>
-          <TableRow border>
-            <Cell center>Shopee 1</Cell>
-            <Cell center>$ 100</Cell>
-            <Cell center>1h 3s</Cell>
-            <Cell center>
-              <Button>Bid</Button>
-            </Cell>
-          </TableRow>
-          <TableRow border>
-            <Cell center>Shopee 1</Cell>
-            <Cell center>$ 100</Cell>
-            <Cell center>1h 3s</Cell>
-            <Cell center>
-              <Button>Bid</Button>
-            </Cell>
-          </TableRow>
-          <TableRow border>
-            <Cell center>Shopee 1</Cell>
-            <Cell center>$ 100</Cell>
-            <Cell center>1h 3s</Cell>
-            <Cell center>
-              <Button>Bid</Button>
-            </Cell>
-          </TableRow>
-        </Table>
+          <thead>
+            <TableRow>
+              <th>Name</th>
+              <th>Current Price</th>
+              <th>Duration</th>
+              <th>Bid</th>
+            </TableRow>
+          </thead>
+          <tbody>
+            {!!data?.length && data.map(({ name, price, lastTimeAuction }, key) => {
+              const lastBidTime = moment(lastTimeAuction).diff(
+                moment(),
+                'hours'
+              )
+
+              console.log(+lastBidTime)
+
+              return (
+                <TableRow key={key} border>
+                  <Cell center>{name}</Cell>
+                  <Cell center>$ {price}</Cell>
+                  <Cell center>
+                    {lastBidTime > 0 ? `${lastBidTime} h` : `${lastBidTime} h ago`}
+                  </Cell>
+                  <Cell center>
+                    <Button disabled={activeTab === TABS.COMPLETED}>Bid</Button>
+                  </Cell>
+                </TableRow>
+              )
+            })}
+          </tbody>
+          </Table>
       </div>
     </Wrapper>
   )

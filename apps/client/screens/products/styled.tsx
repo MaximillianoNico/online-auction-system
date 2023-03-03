@@ -29,13 +29,13 @@ export const Underline = styled.div`
 export const Table = styled.table`
   width: 100%;
   border-collapse: collapse;
-  border-spacing: 10px 10px;
-  border-spacing: 1em 1em;
+  border-spacing: 1em;
 `
 
 export const TableRow = styled.tr`
   height: 100px;
   border: ${(props: ITableRow) => props?.border ? '1px solid black' : 'unset'};
+  border: 1px solid black;
   margin-top: 10px;
 `
 

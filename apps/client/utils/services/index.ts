@@ -13,7 +13,7 @@ const onRequest = (config: InternalAxiosRequestConfig): InternalAxiosRequestConf
   const allCookies = parseCookies()
   const token = allCookies?.['tkn'] || ""
 
-  config.headers.Authorization = `Bearer ${token}`;
+  config.headers.Authorization = `bearer ${token}`;
   return config;
 }
 

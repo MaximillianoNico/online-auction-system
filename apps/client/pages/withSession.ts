@@ -1,5 +1,5 @@
 const withSession = (gssp) => (context) => {
-  const { req, res } = context;
+  const { req, res, resolvedUrl } = context;
 
   res.setHeader(
     "Cache-Control",
@@ -7,11 +7,21 @@ const withSession = (gssp) => (context) => {
   );
 
   const authCookies = req.cookies['tkn']
+  const isAuthPage = resolvedUrl === '/sign-in' || resolvedUrl === '/register';
 
-  if (!authCookies) {
+  if (!authCookies && !isAuthPage) {
     return {
       redirect: {
         destination: "/sign-in",
+        statusCode: 302
+      }
+    }
+  }
+
+  if (isAuthPage && authCookies) {
+    return {
+      redirect: {
+        destination: "/products",
         statusCode: 302
       }
     }
