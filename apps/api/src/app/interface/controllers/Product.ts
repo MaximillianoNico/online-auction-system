@@ -37,8 +37,10 @@ const Create = async (req, res) => {
 }
 
 const Get = async (req, res) => {
-  const productId = req?.params?.id || ""
-  const doc = await Product.find({ _id: productId }).exec();
+  const productId = req?.params?.id || "";
+  const userId = req?.user?.user_id || "";
+
+  const doc = await Product.find({ _id: productId }).where('owner').ne(userId).exec();
 
   const data = {
     uptime: process.uptime(),

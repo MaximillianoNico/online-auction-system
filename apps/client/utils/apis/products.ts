@@ -26,7 +26,19 @@ const ProductDetail = async ({ productId = "" }) => {
   }
 }
 
+const Create = async (payload = {}) => {
+  try {
+    const response = await Service.post(`/products/create`, payload);
+    const data = response?.data?.data || [{ }];
+
+    return { data, errors: null }
+  } catch (err) {
+    return { data: {}, errors: null }
+  }
+}
+
 export default {
   Products,
-  ProductDetail
+  ProductDetail,
+  Create
 }
