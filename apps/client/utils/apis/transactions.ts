@@ -14,4 +14,18 @@ const Bid = async ({ bid = 0, productId = "" }) => {
   }
 }
 
-export default { Bid }
+const Deposit = async ({ deposit = 0 }) => {
+  try {
+    const response = await Service.post(
+      `/transaction/deposit`,
+      { deposit }
+    );
+    const data = response?.data?.data || {};
+
+    return { data, errors: null }
+  } catch (err) {
+    return { data: {}, errors: err }
+  }
+}
+
+export default { Bid, Deposit }

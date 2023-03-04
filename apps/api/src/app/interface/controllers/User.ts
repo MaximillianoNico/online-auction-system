@@ -22,7 +22,7 @@ const Get = async (req, res) => {
   const data = {
     uptime: process.uptime(),
     message: 'Success Get Profile',
-    data: userDetail,
+    data: userDetail[0],
     date: new Date()
   };
 

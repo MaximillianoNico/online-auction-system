@@ -1,5 +1,5 @@
 import styled from "styled-components";
-
+import useUserInfo from "../../utils/hooks/useUserInfo";
 const Container = styled.div`
   padding: 1rem 3rem;
 `;
@@ -30,6 +30,9 @@ const Logo = styled.div`
 `
 
 const Component = ({ children }) => {
+  const { user } = useUserInfo();
+  const deposit = user?.deposit || 0;
+
   return (
     <div>
       <div className="wrapper">
@@ -37,7 +40,7 @@ const Component = ({ children }) => {
           <FlexSpaceBetween>
             <Logo>Logo</Logo>
             <FlexSpaceBetween style={{ columnGap: 20 }}>
-              <div>Balance: $ 100</div>
+              <div>Balance: $ {deposit}</div>
               <Avatar>A</Avatar>
             </FlexSpaceBetween>
           </FlexSpaceBetween>

@@ -34,16 +34,17 @@ const Deposit = async (req, res) => {
   const userDetail = await User.findOne({ _id: userId }).exec();
   const currentDeposit = userDetail?.deposit || 0;
 
-  const updated = await User.findOneAndUpdate(
+  await User.findOneAndUpdate(
     { _id: userId },
     { deposit: +currentDeposit + +deposit },
     { new: true }
   ).exec();
 
+  console.log('deposit: ', { deposit: +currentDeposit + +deposit })
+
   const data = {
     uptime: process.uptime(),
     message: 'Success',
-    data: updated,
     date: new Date()
   };
 
