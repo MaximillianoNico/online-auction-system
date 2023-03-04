@@ -96,9 +96,9 @@ const Bid = async (req, res) => {
   });
 
   // Protect bid time based on lastTimeAuction
-  const productLastBidTime = moment(productDetail?.lastTimeAuction);
-  const currentDate = moment().toISOString()
-  if (productLastBidTime.isAfter(currentDate)) {
+  const productLastBidTime = moment(productDetail?.lastTimeAuction).toISOString();
+  const currentDate = moment()
+  if (currentDate.isAfter(productLastBidTime)) {
       return res.status(400).send({
         uptime: process.uptime(),
         errors: "Can't bid this product due it's past auction time",
