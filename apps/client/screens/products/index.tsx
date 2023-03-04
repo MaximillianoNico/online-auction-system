@@ -110,14 +110,13 @@ const Component = () => {
               <Input
                 name={"bid"}
                 type="number"
-                onChange={() => {}}
                 value={""}
               />
             </InputGroup>
           </ModalBody>
 
           <ModalFooter>
-            <Button colorScheme='teal' variant='outline' onClick={toggleOpenModal}>
+            <Button onClick={toggleOpenModal}>
               Cancel
             </Button>
             <Button>Submit</Button>
