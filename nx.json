@@ -11,7 +11,8 @@
           "test",
           "e2e"
         ],
-        "accessToken": "MGU3Y2NkMTAtMTUxYS00N2ZkLTg4NzctNGE4ZjYwNzUzMDdlfHJlYWQtd3JpdGU="
+        "accessToken": "MGU3Y2NkMTAtMTUxYS00N2ZkLTg4NzctNGE4ZjYwNzUzMDdlfHJlYWQtd3JpdGU=",
+        "cacheDirectory": "/tmp/nx-cache"
       }
     }
   },

@@ -1,4 +1,20 @@
 import moment from 'moment'
+import {
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+} from '@chakra-ui/react'
+
+import {
+  Input,
+  InputGroup,
+  InputLabel,
+} from "../signin/styled";
+
 import Tabs from '../../components/atoms/Tabs'
 import Tab from '../../components/atoms/Tab'
 import {
@@ -9,11 +25,30 @@ import {
   Button
 } from '../products/styled'
 import useProducts from './actions'
+import Transactions from '../../utils/apis/transactions'
+import { useState } from 'react'
 
 const Component = () => {
+  const [isOpen, setOpenModal] = useState(false);
+  const [currentItem, setCurrent] = useState({ name: '', id: '' })
   const { activeTab, onChangeTab, TABS, data } = useProducts();
 
-  console.log('data: ', data);
+  const onBidItem = async ({ bid = 0, itemId }) => {
+    const { data, errors } = await Transactions.Bid({ bid })
+
+    if (data) {
+      alert('Success Bid item ' + itemId)
+
+      return;
+    }
+
+    alert('Failed bid item: ' + errors)
+  }
+
+  const toggleOpenModal = (name?: any, id?: any) => {
+    setCurrent({ name: name ?? "", id: id ?? "" })
+    setOpenModal(prev => !prev)
+  }
 
   return (
     <Wrapper>
@@ -40,7 +75,7 @@ const Component = () => {
             </TableRow>
           </thead>
           <tbody>
-            {!!data?.length && data.map(({ name, price, lastTimeAuction }, key) => {
+            {!!data?.length && data.map(({ name, price, lastTimeAuction, _id }, key) => {
               const lastBidTime = moment(lastTimeAuction).diff(
                 moment(),
                 'hours'
@@ -56,7 +91,7 @@ const Component = () => {
                     {lastBidTime > 0 ? `${lastBidTime} h` : `${lastBidTime} h ago`}
                   </Cell>
                   <Cell center>
-                    <Button disabled={activeTab === TABS.COMPLETED}>Bid</Button>
+                    <Button disabled={activeTab === TABS.COMPLETED} onClick={() => toggleOpenModal(name, _id)}>Bid</Button>
                   </Cell>
                 </TableRow>
               )
@@ -64,6 +99,31 @@ const Component = () => {
           </tbody>
           </Table>
       </div>
+      <Modal isOpen={isOpen} onClose={toggleOpenModal}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Item {currentItem.name}</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <InputGroup>
+              <InputLabel>Bid price</InputLabel>
+              <Input
+                name={"bid"}
+                type="number"
+                onChange={() => {}}
+                value={""}
+              />
+            </InputGroup>
+          </ModalBody>
+
+          <ModalFooter>
+            <Button colorScheme='teal' variant='outline' onClick={toggleOpenModal}>
+              Cancel
+            </Button>
+            <Button>Submit</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </Wrapper>
   )
 }

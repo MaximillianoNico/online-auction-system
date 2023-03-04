@@ -18,7 +18,11 @@ const useInitHooks = (defaultState = null) => {
 
 const createClient = ({ app }: ISocket) => {
   const server = http.createServer(app);
-  const io = new Server(server);
+  const io = new Server(server, {
+    cors: {
+      origin: "*"
+    }
+  });
   const [productList, updateProductState] = useInitHooks([])
 
   io.on('connection', (socket) => {

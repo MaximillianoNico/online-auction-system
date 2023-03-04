@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import moment from 'moment';
 import Products from "../../utils/apis/products";
+import useProductBid from "../../utils/hooks/useProductBid";
 
 const TABS = {
   ONGOING: "Ongoing",
@@ -11,6 +12,7 @@ const useProducts = () => {
   const [products, setProducts] = useState([]);
   const [error, setError] = useState();
   const [activeTab, setActiveTab] = useState(TABS?.ONGOING)
+  const { products: productUpdated } = useProductBid("")
 
   const handleChangeTab = (tab) => setActiveTab(tab);
 
@@ -24,7 +26,6 @@ const useProducts = () => {
         return;
       }
 
-      console.log('active: ', activeTab)
       const newProducts = data?.length && data.filter(
         ({ lastTimeAuction }) => {
           const lastBidTime = moment(lastTimeAuction).diff(
@@ -44,6 +45,12 @@ const useProducts = () => {
 
     GetProducts({ isPublished: !!(activeTab === TABS?.ONGOING)}); // Search Product
   }, [activeTab]);
+
+  useEffect(() => {
+    if (productUpdated?.length) {
+      setProducts(productUpdated)
+    }
+  }, [productUpdated])
 
   return {
     activeTab,

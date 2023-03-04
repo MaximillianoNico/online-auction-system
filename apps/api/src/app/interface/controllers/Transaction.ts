@@ -120,6 +120,11 @@ const Bid = async (req, res) => {
         { new: true }
       ).exec();
 
+      const productUpdated = await Product.find({});
+
+      // Update list of product
+      await req?.client?.emit('products', productUpdated)
+
       // Send latest bid product
       await req?.client?.emit(`product-bid::${productId}`, {
         product: updateLatestBidTransaction?.latestBid
