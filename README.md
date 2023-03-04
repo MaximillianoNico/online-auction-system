@@ -7,7 +7,14 @@
 ## Application Purpose
 We created an Auction Application that allows users to sell their products using the bidding method.
 
-Currently we are using NX Monorepo wth MERN Stack. by using monorepo for make easy to maintain and also able to share component to other apps
+Currently we are using NX Monorepo with MERN Stack. by using monorepo, it will make easy to maintain multiple apps and also able to share component and libs to other apps.
+
+## Stack We Used
+- Next JS (React Framework)
+- Express JS
+- MongoDB
+- Redis
+- SocketIO
 
 ## Development server
 
@@ -16,6 +23,25 @@ Run `npx nx serve client` for a dev server. Navigate to http://localhost:4200/. 
 
 ### Server
 Run `npx nx serve api --watch` for a api dev server. Navigate to http://localhost:8080/app/health-check. The API will return status API
+
+## Development Documentation
+Here is the API Documentation which is include:
+- Authentication
+- Products
+- Transactions
+- Users
+- Websocket (SocketIO)
+
+API: [Postman Documentation](https://bettradsv01.postman.co/workspace/Jitera~882cf0e5-d6bf-4089-949e-78a039aec78d/collection/4055949-f97357e6-c4a6-45d5-a133-beda1167caef?action=share&creator=4055949)
+
+## Applications Flow
+### Bidding Product
+here is the bidding flow
+
+### Authentication
+here is the auth flow for sign-in, sign-out and register
+
+### Publishing Product
 
 ## Understand this workspace
 

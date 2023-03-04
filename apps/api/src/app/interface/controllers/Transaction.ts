@@ -108,33 +108,35 @@ const Bid = async (req, res) => {
 
   const NewTransaction = new Transactions({ productId, userId, bid });
 
-  await NewTransaction.save(async (_err, result) => {
-    if (result) {
+  NewTransaction.save(
+    async (_err, result) => {
       if (_err) {
         // TODO:
       }
 
-      const updateLatestBidTransaction = await Product.findOneAndUpdate(
-        { _id: productId },
-        { latestBid: { bidBy: userId, bidPrice: bid }},
-        { new: true }
-      ).exec();
+      if (result) {
+        const updateLatestBidTransaction = await Product.findOneAndUpdate(
+          { _id: productId },
+          { latestBid: { bidBy: userId, bidPrice: bid }},
+          { new: true }
+        ).exec();
 
-      const productUpdated = await Product.find({});
+        const productUpdated = await Product.find({});
 
-      // Update list of product
-      await req?.client?.emit('products', productUpdated)
+        // Update list of product
+        await req?.client?.emit('products', productUpdated)
 
-      // Send latest bid product
-      await req?.client?.emit(`product-bid::${productId}`, {
-        product: updateLatestBidTransaction?.latestBid
-      })
+        // Send latest bid product
+        await req?.client?.emit(`product-bid::${productId}`, {
+          product: updateLatestBidTransaction?.latestBid
+        })
 
-      if (updateLatestBidTransaction) {
-        // TODO: need to socket.emit into `bid::{{productId}}` with send bid price
+        if (updateLatestBidTransaction) {
+          // TODO: need to socket.emit into `bid::{{productId}}` with send bid price
+        }
       }
     }
-  });
+  );
 
   const data = {
     uptime: process.uptime(),

@@ -17,7 +17,6 @@ const Component = () => {
   const [currentItem, setCurrent] = useState({ name: '', id: '' })
   const { activeTab, onChangeTab, TABS, data } = useProducts();
 
-  console.log('activeTab: ', activeTab);
   const toggleOpenModal = (name?: any, id?: any) => {
     setCurrent({ name: name ?? "", id: id ?? "" })
     setOpenModal(prev => !prev)

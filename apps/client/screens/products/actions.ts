@@ -48,7 +48,12 @@ const useProducts = () => {
 
   useEffect(() => {
     if (productUpdated?.length) {
-      setProducts(productUpdated)
+      const currentIds = products?.map(({ _id }) => _id);
+      const newProductUpdated = productUpdated?.filter(
+        ({ _id }) => currentIds.includes(_id)
+      )
+      // const newProduct = products.map()
+      setProducts(newProductUpdated)
     }
   }, [productUpdated])
 
