@@ -16,10 +16,6 @@ api -> api --: check lastBidTime, compare to current time
 api -> api --: validate price bid
 end
 
-' api --> db --: [HTTP]\n201 {"jobId": 1}
-' api -[hidden]> db
-' end
-
 group #LightBlue Validation User Wallet
 api -> db --: Get User Deposit
 db -> api --: Return User Deposit
@@ -39,26 +35,4 @@ group #LightCyan Request Result
     api -> client --: [HTTP]\403 {... output ...}
   end
 end
-
-' group #lightsalmon Initialization
-' server -> api ++: [HTTP]\nPUT /api/job/1
-' api --> server --: [HTTP]\n202 {}
-' api -[hidden]> db
-' end
-
-' group #lightblue Fetching Result
-' loop #FFFFFFAA Polling until output is available
-'  server -> api ++: [HTTP]\nGET /api/job/1
-'  alt #FFFFFFAA Job still processing
-'    api -[#blue]-> server : [HTTP]\n200 {}
-'  else Job complete. Fetch output
-'    api -[#blue]-> server --: [HTTP]\n303 {"URL": "/api/job/1/output"}
-'    server -> api ++: [HTTP]\nGET /api/job/1/output
-'    api --> server --: [HTTP]\n200 {... output ...}
-'  end
-' end
-'    server -> db ++: Store output
-'    deactivate server
-'    deactivate db
-' end
 @enduml
