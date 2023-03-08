@@ -7,7 +7,7 @@ import NoSQL from '../repository/mongo';
 
 const createServer = () => {
   const app = express()
-  const API_PORT = process.env.API_PORT;
+  const API_PORT = process.env.PORT || process.env.API_PORT;
   const isDevelopment = process.env?.API_MODE === "staging" || process.env?.API_MODE === "production"
 
   // Initialize Mongoose
