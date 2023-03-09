@@ -2,7 +2,7 @@ import axios, { InternalAxiosRequestConfig, AxiosError, AxiosResponse } from 'ax
 import { parseCookies } from 'nookies'
 
 const instance = axios.create({
-  baseURL: process?.env?.API_HOST ?? 'http://localhost:8080',
+  baseURL: process?.env?.API_HOST ?? 'http://209.97.161.156:3000',
   timeout: 3000,
   headers: {
     'x-app-id': 'auction-app-1'
