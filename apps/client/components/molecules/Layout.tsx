@@ -33,6 +33,8 @@ const Component = ({ children }) => {
   const { user } = useUserInfo();
   const deposit = user?.deposit || 0;
 
+  const firstChar = (user?.email || "")?.split('')?.[0]
+
   return (
     <div>
       <div className="wrapper">
@@ -41,7 +43,7 @@ const Component = ({ children }) => {
             <Logo>Logo</Logo>
             <FlexSpaceBetween style={{ columnGap: 20 }}>
               <div>Balance: $ {deposit}</div>
-              <Avatar>A</Avatar>
+              <Avatar>{firstChar?.toUpperCase()}</Avatar>
             </FlexSpaceBetween>
           </FlexSpaceBetween>
         </Container>

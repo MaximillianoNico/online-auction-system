@@ -1,4 +1,5 @@
 import moment from 'moment'
+import mongoose from 'mongoose';
 import Product from '../../infrastructure/repository/mongo/Product'
 
 const Create = async (req, res) => {
@@ -56,6 +57,9 @@ const GetList = async (req, res) => {
   const isAchieve = req?.query?.achieve === 'true'
 
   const queries = {
+    owner: {
+      $ne: new mongoose.Types.ObjectId(req?.user?.user_id)
+    },
     ...(isPublished ? { isActive: true } : {}),
     ...(isAchieve ? { lastTimeAuction: { $lt: Date.now() } } : {})
   };
