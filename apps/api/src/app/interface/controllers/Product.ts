@@ -16,24 +16,23 @@ const Create = async (req, res) => {
     isActive: false
   });
 
-  let resultProduct = {}
   await NewProduct.save((err, results) => {
     if (err) {
-      console.log('err: ', err)
-      return {}
+      return res.status(400).send({
+        errors: err,
+        date: new Date()
+      })
     }
 
-    resultProduct = results
+    const data = {
+      uptime: process.uptime(),
+      message: 'Created!',
+      data: results,
+      date: new Date()
+    };
+
+    return res.status(200).send(data);
   });
-
-  const data = {
-    uptime: process.uptime(),
-    message: 'Created!',
-    data: resultProduct,
-    date: new Date()
-  };
-
-  res.status(200).send(data);
 }
 
 const Get = async (req, res) => {
@@ -54,9 +53,14 @@ const Get = async (req, res) => {
 
 const GetList = async (req, res) => {
   const isPublished = req?.query?.published === 'true'
-  const doc = await Product.find({
-    ...(isPublished ? { isActive: true } : {})
-  }).exec();
+  const isAchieve = req?.query?.achieve === 'true'
+
+  const queries = {
+    ...(isPublished ? { isActive: true } : {}),
+    ...(isAchieve ? { lastTimeAuction: { $lt: Date.now() } } : {})
+  };
+
+  const doc = await Product.find(queries).exec();
 
   const data = {
     uptime: process.uptime(),
