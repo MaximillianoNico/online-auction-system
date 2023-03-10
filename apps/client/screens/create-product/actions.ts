@@ -33,10 +33,18 @@ const useCreateProduct = () => {
       price: product[INPUT_TYPE.START_PRICE]
     }
 
-    const { errors } = await Product.Create(payload);
+    const { errors, data } = await Product.Create(payload);
 
     if (errors) {
       setError(errors?.response?.data?.message);
+
+      return;
+    }
+
+    const { errors: errorPublish } = await Product.Publish(data?._id)
+
+    if (errorPublish) {
+      setError(errorPublish?.response?.data?.message);
 
       return;
     }

@@ -38,9 +38,10 @@ const Component = (props: IModal) => {
   const handleSubmit = async () => {
     // TODO: submit
     const payload = { bid, productId: id }
-    const { data, errors } = await Transactions.Bid(payload)
+    const { errors } = await Transactions.Bid(payload)
+    const errorMessage = errors?.response?.data?.errors || ""
 
-    if (data) {
+    if (!errorMessage) {
       alert('Success Bid item ' + id)
 
       onToggle();
@@ -48,7 +49,7 @@ const Component = (props: IModal) => {
       return;
     }
 
-    alert('Failed bid item: ' + errors)
+    alert('Failed bid item: ' + errorMessage)
   }
 
   return (

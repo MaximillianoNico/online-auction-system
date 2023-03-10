@@ -17,8 +17,8 @@ const useProducts = () => {
   const handleChangeTab = (tab) => setActiveTab(tab);
 
   useEffect(() => {
-    const GetProducts = async ({ isPublished = false }) => {
-      const { data, errors } = await Products.Products({ isPublished });
+    const GetProducts = async ({ isPublished = false, isAchieve = false }) => {
+      const { data, errors } = await Products.Products({ isPublished, isAchieve });
 
       if (errors) {
         setError(errors.response.data?.errors)
@@ -43,7 +43,7 @@ const useProducts = () => {
       setProducts(newProducts);
     };
 
-    GetProducts({ isPublished: !!(activeTab === TABS?.ONGOING)}); // Search Product
+    GetProducts({ isPublished: true, isAchieve: !(activeTab === TABS?.ONGOING)}); // Search Product
   }, [activeTab]);
 
   useEffect(() => {
